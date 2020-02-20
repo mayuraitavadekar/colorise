@@ -1,6 +1,6 @@
 # color-bee.js <img src="https://github.com/mayuraitavadekar/color-bee.js/blob/master/new-color-bee-icon.png" alt="color-bee Logo" align="left">
 
-A small color manipulation library in JavaScript.
+A small JavaScript library for color manipulation.
 <br/>
 <br/>
 ## Recent Updates
