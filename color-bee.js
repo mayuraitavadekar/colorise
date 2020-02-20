@@ -1,7 +1,6 @@
 'use strict';
 
 const fs = require('fs');
-var colorFile;
 
 function getColorName(colorCode) {
     var file = fs.readFileSync('list.json','utf-8');
