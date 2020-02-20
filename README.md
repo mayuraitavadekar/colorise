@@ -1,4 +1,4 @@
-# Color-bee.js <img src="https://github.com/mayuraitavadekar/color-bee.js/blob/master/new-color-bee-icon.png" alt="color-bee Logo" align="left">
+# color-bee.js <img src="https://github.com/mayuraitavadekar/color-bee.js/blob/master/new-color-bee-icon.png" alt="color-bee Logo" align="left">
 
 A small color manipulation library in JavaScript.
 <br/>
