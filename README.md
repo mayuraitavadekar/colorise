@@ -1,3 +1,5 @@
+![color-bee-icon](https://github.com/mayuraitavadekar/color-bee.js/blob/master/new-color-bee-icon.png)
+
 # Color-bee
 
 A small color manipulation library in JavaScript.
