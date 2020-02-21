@@ -29,6 +29,19 @@ function getColorCode(colorName) {
     }
 }
 
+function rgbPercentage(hexCode) {
+
+    let result = HexToRgb(hexCode);
+    let arr = new Array();
+    let r,g,b;
+    for(let i=0;i<result.length;i++) {
+        arr.push(Math.abs(((result[i]/255) * 100).toFixed(4)));
+    }
+    
+    return arr;
+
+}
+
 function HexadecimalToDecimal(smallHexCode) {
 
     let dec = 0;
@@ -51,14 +64,10 @@ function HexadecimalToDecimal(smallHexCode) {
     for(let i=0;i<smallHexCode.length;i++) {
 
         let b = smallHexCode[i];
-        console.log(b);
 
         // check if b is equals to codes
         Object.entries(codes).forEach(([key, value]) => {
-            if(b === key) {
-                b = value;
-                console.log("value");
-            }
+            if(b === key) b = value;
         });
 
         dec += b * Math.pow(16,((smallHexCode.length-i)-1));
@@ -70,21 +79,30 @@ function HexadecimalToDecimal(smallHexCode) {
 
 function HexToRgb(hexCode) {
 
-    if(hexCode[0]!='#') {
-        console.log("this is not hex code.");
-        exit(0);
-    }
+    if(hexCode[0] === '#') hexCode = hexCode.substring(1);
 
-    hexCode = hexCode.substring(1);
-
-    if(hexCode.length > 6) {
-        console.log("length is too much.");
-        exit(0);
-    }
+    else if(hexCode[0]!='#' && hexCode.length!=6) return [0,0,0];
 
     let r = HexadecimalToDecimal(hexCode.substring(0,2));
     let g = HexadecimalToDecimal(hexCode.substring(2,4));
     let b = HexadecimalToDecimal(hexCode.substring(4,6)); 
 
     return [r,g,b];
+}
+
+
+function rgbToCMYK(r,g,b) {
+
+    r = r/255;
+    g = g/255;
+    b = b/255;
+
+    // calculating k
+    let k = Math.abs((1 - Math.max(r,g,b)).toFixed(4));
+    let c = Math.abs(((1-r-k) / (1-k)).toFixed(4));
+    let m = Math.abs(((1-g-k) / (1-k)).toFixed(4));
+    let y = Math.abs(((1-b-k) / (1-k)).toFixed(4));
+
+    return [c,m,y,k];
+
 }
