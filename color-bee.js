@@ -3,16 +3,20 @@
 const fs = require('fs');
 
 function getColorName(colorCode) {
-    var file = fs.readFileSync('list.json','utf-8');
+    let file = fs.readFileSync('list.json','utf-8');
     const parser = JSON.parse(file);
     return parser[colorCode];
 }
+
+/** remaining
+ * function hexToRgb();
+ */
 
 function getColorCode(colorName) {
 
     let colorCode;
     let flag = 0;
-    var file = fs.readFileSync('list.json','utf-8');
+    let file = fs.readFileSync('list.json','utf-8');
     const parser = JSON.parse(file);
     Object.entries(parser).forEach(([key, value]) => {
         if(value === colorName) {
@@ -33,13 +37,25 @@ function rgbPercentage(hexCode) {
 
     let result = HexToRgb(hexCode);
     let arr = new Array();
-    let r,g,b;
     for(let i=0;i<result.length;i++) {
         arr.push(Math.abs(((result[i]/255) * 100).toFixed(4)));
     }
     
     return arr;
 
+}
+
+function rgbPercentage(r,g,b) {
+
+    let arr = new Array();
+    let percR = ((r/255)*100).toFixed(4);
+    let percG = ((g/255)*100).toFixed(4);
+    let percB = ((b/255)*100).toFixed(4);
+    arr.push(percR);
+    arr.push(percG);
+    arr.push(percB);
+
+    return arr;
 }
 
 function HexadecimalToDecimal(smallHexCode) {
@@ -81,7 +97,7 @@ function HexToRgb(hexCode) {
 
     if(hexCode[0] === '#') hexCode = hexCode.substring(1);
 
-    else if(hexCode[0]!='#' && hexCode.length!=6) return [0,0,0];
+    else if(hexCode[0]!='#' && hexCode.length!=6) console.log('error!');
 
     let r = HexadecimalToDecimal(hexCode.substring(0,2));
     let g = HexadecimalToDecimal(hexCode.substring(2,4));
@@ -93,16 +109,66 @@ function HexToRgb(hexCode) {
 
 function rgbToCMYK(r,g,b) {
 
+    let arr = new Array();
+    arr.push(r);
+    arr.push(g);
+    arr.push(b);
+
+    for(let i=0;i<arr.length;i++) {
+        if(arr[i]>255) arr[i] = 255;
+        if(arr[i]<0) arr[i] = 0;
+    }
+
     r = r/255;
     g = g/255;
     b = b/255;
 
-    // calculating k
     let k = Math.abs((1 - Math.max(r,g,b)).toFixed(4));
     let c = Math.abs(((1-r-k) / (1-k)).toFixed(4));
     let m = Math.abs(((1-g-k) / (1-k)).toFixed(4));
     let y = Math.abs(((1-b-k) / (1-k)).toFixed(4));
 
     return [c,m,y,k];
+ 
+}
+ 
+function rgbToHsl(r,g,b) {
+    
+    let res = {
+        hue : null,
+        saturation : null, 
+        lightness : null,
+    };
+    
+    let arr = new Array();
+    arr.push(r);
+    arr.push(g);
+    arr.push(b);
 
+    for(let i=0;i<arr.length;i++) {
+        if(arr[i]<0) arr[i] = 0;
+        if(arr[i]>255) arr[i] = 255;
+    }
+
+
+    r = arr[0]/255;
+    g = arr[1]/255;
+    b = arr[2]/255;
+
+    let cmax = Math.max(r,g,b);
+    let cmin = Math.min(r,g,b);
+    let delta = cmax - cmin;
+
+
+    if(delta === 0) res.hue = 0;
+    else if(cmax === r) res.hue = (((g-b)/delta)%6)*60;
+    else if(cmax === g) res.hue = (((b-r)/delta)+2)*60;
+    else if(cmax === b) res.hue = (((r-g)/delta)+4)*60;
+
+    res.lightness = (cmax + cmin)/2;
+
+    if(delta === 0) res.saturation = 0;
+    else res.saturation = (delta/(1-Math.abs(2*(res.lightness)-1)));
+
+    return res;
 }
