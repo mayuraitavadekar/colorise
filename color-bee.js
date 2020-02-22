@@ -1,6 +1,8 @@
 'use strict';
 
 const fs = require('fs');
+const err = 'error!';
+const invalid = 'invalid code!'
 
 function getColorName(colorCode) {
     let file = fs.readFileSync('list.json','utf-8');
@@ -25,12 +27,9 @@ function getColorCode(colorName) {
         }
     });
 
-    if(flag!=0) {
-        return colorCode;
-    }
-    else {
-        console.log("color code not found.");
-    }
+    if(flag!=0) return colorCode;
+    
+    else return invalid;
 }
 
 function rgbPercentage(hexCode) {
@@ -42,7 +41,6 @@ function rgbPercentage(hexCode) {
     }
     
     return arr;
-
 }
 
 function rgbPercentage(r,g,b) {
@@ -97,13 +95,13 @@ function HexToRgb(hexCode) {
 
     if(hexCode[0] === '#') hexCode = hexCode.substring(1);
 
-    else if(hexCode[0]!='#' && hexCode.length!=6) console.log('error!');
+    else if(hexCode[0]!='#' && hexCode.length!=6) return err;
 
     let r = HexadecimalToDecimal(hexCode.substring(0,2));
     let g = HexadecimalToDecimal(hexCode.substring(2,4));
     let b = HexadecimalToDecimal(hexCode.substring(4,6)); 
 
-    return [r,g,b];
+    return [r,g,b]; // returns array
 }
 
 
@@ -172,3 +170,117 @@ function rgbToHsl(r,g,b) {
 
     return res;
 }
+
+function negateColor(r,g,b) {
+
+    let arr = new Array();
+    arr.push(r);
+    arr.push(g);
+    arr.push(b);
+
+    for(let i=0;i<arr.length;i++) {
+        if(arr[i]>255) arr[i] = 255;
+        else if(arr[i]<0) arr[i] = 0;
+    }
+
+    for(let i=0;i<arr.length;i++) {
+        arr[i] = 255 - arr[i];
+    }
+
+    return arr;
+
+}
+
+function lightenColor(r,g,b,ratio) {
+
+    if(r !== undefined && g !== undefined && b !== undefined && ratio !== undefined) {
+        // rgb case
+        let res = rgbToHsl(r,g,b);
+        res.lightness += res.lightness * ratio;
+        return res;
+    }
+
+    if(r !== undefined && g !== undefined && b === undefined && ratio === undefined) {
+        // hexcode case
+        let hexcode = r;
+        ratio = g;
+        let arr = HexToRgb(hexcode);
+        let res = rgbToHsl(arr[0],arr[1],arr[2]);
+        res.lightness += res.lightness * ratio;
+        return res;
+    }
+
+    else return err;
+
+}
+
+function rgbToHwb(r,g,b) {
+
+    // calculating hue
+    let res = {
+        hue : null,
+        whiteness : null,
+        blackness : null
+    }
+
+    let res = rgbToHsl(r,g,b);
+    res.hue = res.hue;
+
+    // calculating whiteness
+    res.whiteness = 1/255*Math.min(r,Math.min(g,b));
+    res.blackness = 1 - 1/255*Math.max(r,Math.max(g,b));
+
+    return res;
+
+}
+
+function whitenColor(r,g,b,ratio) {
+
+    if(r !== undefined && g !== undefined && b !== undefined && ratio !== undefined) {
+        // rgb case
+        let res = rgbToHwb(r,g,b);
+        res.lightness -= res.lightness * ratio;
+        // now again convert the colors into rgb;
+        return res;
+    }
+
+    if(r !== undefined && g !== undefined && b === undefined && ratio === undefined) {
+        // hexcode case
+        let hexcode = r;
+        ratio = g;
+        let arr = HexToRgb(hexcode);
+        let res = rgbToHsl(arr[0],arr[1],arr[2]);
+        res.lightness -= res.lightness * ratio;
+        // again convert the colors into rgb;
+        return res;
+    }
+
+    else return err;
+
+
+}
+
+function darkenColor(r,g,b,ratio) {
+
+    if(r !== undefined && g !== undefined && b !== undefined && ratio !== undefined) {
+        // rgb case
+        let res = rgbToHsl(r,g,b);
+        res.lightness -= res.lightness * ratio;
+        // again convert the colors into rgb
+        return res;
+    }
+
+    if(r !== undefined && g !== undefined && b === undefined && ratio === undefined) {
+        // hexcode case
+        let hexcode = r;
+        ratio = g;
+        let arr = HexToRgb(hexcode);
+        let res = rgbToHsl(arr[0],arr[1],arr[2]);
+        res.lightness -= res.lightness * ratio;
+        // again convert the colors into rgb
+        return res;
+    }
+
+    else return err;
+}
+
