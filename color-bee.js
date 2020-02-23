@@ -1,18 +1,29 @@
 'use strict';
 
 const fs = require('fs');
+
 const err = 'error!';
 const invalid = 'invalid code!'
+const codes = {
+    'A' : 10,
+    'a' : 10,
+    'B' : 11,
+    'b' : 11,
+    'C' : 12,
+    'c' : 12,
+    'D' : 13,
+    'd' : 13,
+    'E' : 14,
+    'e' : 14,
+    'F' : 15,
+    'f' : 15
+};
 
 function getColorName(colorCode) {
     let file = fs.readFileSync('list.json','utf-8');
     const parser = JSON.parse(file);
     return parser[colorCode];
 }
-
-/** remaining
- * function hexToRgb();
- */
 
 function getColorCode(colorName) {
 
@@ -32,17 +43,6 @@ function getColorCode(colorName) {
     else return invalid;
 }
 
-function rgbPercentage(hexCode) {
-
-    let result = HexToRgb(hexCode);
-    let arr = new Array();
-    for(let i=0;i<result.length;i++) {
-        arr.push(Math.abs(((result[i]/255) * 100).toFixed(4)));
-    }
-    
-    return arr;
-}
-
 function rgbPercentage(r,g,b) {
 
     let arr = new Array();
@@ -56,30 +56,16 @@ function rgbPercentage(r,g,b) {
     return arr;
 }
 
+// -------------------------------------------------------------------------------------------------
+
 function HexadecimalToDecimal(smallHexCode) {
 
     let dec = 0;
-
-    let codes = {
-        'A' : 10,
-        'a' : 10,
-        'B' : 11,
-        'b' : 11,
-        'C' : 12,
-        'c' : 12,
-        'D' : 13,
-        'd' : 13,
-        'E' : 14,
-        'e' : 14,
-        'F' : 15,
-        'f' : 15
-    };
-
+    
     for(let i=0;i<smallHexCode.length;i++) {
 
         let b = smallHexCode[i];
-
-        // check if b is equals to codes
+        
         Object.entries(codes).forEach(([key, value]) => {
             if(b === key) b = value;
         });
@@ -104,6 +90,7 @@ function HexToRgb(hexCode) {
     return [r,g,b]; // returns array
 }
 
+// -------------------------------------------------------------------------------------------------
 
 function rgbToCMYK(r,g,b) {
 
@@ -129,13 +116,15 @@ function rgbToCMYK(r,g,b) {
     return [c,m,y,k];
  
 }
- 
+
+// -------------------------------------------------------------------------------------------------
+
 function rgbToHsl(r,g,b) {
     
     let res = {
-        hue : null,
-        saturation : null, 
-        lightness : null,
+        h : null,
+        s : null, 
+        l : null,
     };
     
     let arr = new Array();
@@ -157,19 +146,89 @@ function rgbToHsl(r,g,b) {
     let cmin = Math.min(r,g,b);
     let delta = cmax - cmin;
 
+    if(delta === 0) res.h = 0;
+    else if(cmax === r) res.h = (((g-b)/delta)%6)*60;
+    else if(cmax === g) res.h = (((b-r)/delta)+2)*60;
+    else if(cmax === b) res.h = (((r-g)/delta)+4)*60;
 
-    if(delta === 0) res.hue = 0;
-    else if(cmax === r) res.hue = (((g-b)/delta)%6)*60;
-    else if(cmax === g) res.hue = (((b-r)/delta)+2)*60;
-    else if(cmax === b) res.hue = (((r-g)/delta)+4)*60;
+    res.l = (cmax + cmin)/2;
 
-    res.lightness = (cmax + cmin)/2;
+    if(delta === 0) res.s = 0;
+    else res.s = (delta/(1-Math.abs(2*(res.l)-1)));
 
-    if(delta === 0) res.saturation = 0;
-    else res.saturation = (delta/(1-Math.abs(2*(res.lightness)-1)));
+    return res; // return object
+}
 
+// -------------------------------------------------------------------------------------------------
+
+function rgbToHwb(r,g,b) {
+    
+    let res  = {
+        h : null,
+        w : null,
+        b : null
+    };
+
+    let temp = rgbToHsl(r,g,b);
+    res.h = temp.h;
+    
+    res.w = 1/255*Math.min(r,Math.min(g,b));
+    res.b = 1 - 1/255*Math.max(r,Math.max(g,b));
     return res;
 }
+
+// -------------------------------------------------------------------------------------------------
+
+function whitenColor(r,g,b,ratio) {
+
+    let res = {
+        h : null,
+        w : null,
+        b : null,
+    };
+
+    let temp = rgbToHwb(r,g,b);
+    res.h = temp.h;
+    res.w = temp.w*ratio;
+    res.b = 1 - res.w;
+    return res;
+}
+
+function blackenColor(r,g,b,ratio) {
+
+    let res = {
+        h : null,
+        w : null,
+        b : null
+    };
+
+    let temp = rgbToHwb(r,g,b);
+    res.h = temp.h;
+    res.b = temp.b*ratio;
+    res.w = 1 - res.b;
+    return res;
+}
+
+// -------------------------------------------------------------------------------------------------
+
+function lightenColor(r,g,b,ratio) {
+
+    let res = rgbToHsl(r,g,b);
+    res.l += res.l * ratio;
+    return res;
+
+}
+
+// -------------------------------------------------------------------------------------------------
+
+function darkenColor(r,g,b,ratio) {
+
+    let res = rgbToHsl(r,g,b);
+    res.l -= res.l * ratio;
+    return res;
+}
+
+// -------------------------------------------------------------------------------------------------
 
 function negateColor(r,g,b) {
 
@@ -191,96 +250,52 @@ function negateColor(r,g,b) {
 
 }
 
-function lightenColor(r,g,b,ratio) {
+// -------------------------------------------------------------------
 
-    if(r !== undefined && g !== undefined && b !== undefined && ratio !== undefined) {
-        // rgb case
-        let res = rgbToHsl(r,g,b);
-        res.lightness += res.lightness * ratio;
-        return res;
+function rgbToHex(r,g,b) {
+
+    let hexcode = new String();
+    let arr = new Array();
+    let flag,k;
+    arr.push(r);
+    arr.push(g);
+    arr.push(b);
+
+
+    for(let i=0;i<arr.length;i++) {
+        let number = arr[i];
+        number = (number/16).toFixed(2);
+        let std_token = number.toString().split(".");
+        
+        // left
+        flag = 0;
+        let left_number = parseInt(std_token[0]);
+        Object.entries(codes).forEach(([key, value]) => {
+            if(parseInt(left_number) === value) {
+                k = key.toUpperCase();
+                flag = 1;
+            }
+        });
+
+        if(flag!=0) hexcode += k;
+        else hexcode += std_token[0];
+        
+        // right
+        flag = 0;
+        let right_number = new String();
+        right_number += "."+std_token[1];
+        right_number = (parseFloat(right_number))*16;
+        Object.entries(codes).forEach(([key, value]) => {
+            if(parseInt(right_number) === value) {
+                k = key.toUpperCase();
+                flag = 1;
+            }
+        });
+
+        if(flag!=0) hexcode += k;
+        else hexcode += right_number;
     }
 
-    if(r !== undefined && g !== undefined && b === undefined && ratio === undefined) {
-        // hexcode case
-        let hexcode = r;
-        ratio = g;
-        let arr = HexToRgb(hexcode);
-        let res = rgbToHsl(arr[0],arr[1],arr[2]);
-        res.lightness += res.lightness * ratio;
-        return res;
-    }
-
-    else return err;
-
+    hexcode = "#" + hexcode;
+    return hexcode;
 }
-
-function rgbToHwb(r,g,b) {
-
-    // calculating hue
-    let res = {
-        hue : null,
-        whiteness : null,
-        blackness : null
-    }
-
-    let res = rgbToHsl(r,g,b);
-    res.hue = res.hue;
-
-    // calculating whiteness
-    res.whiteness = 1/255*Math.min(r,Math.min(g,b));
-    res.blackness = 1 - 1/255*Math.max(r,Math.max(g,b));
-
-    return res;
-
-}
-
-function whitenColor(r,g,b,ratio) {
-
-    if(r !== undefined && g !== undefined && b !== undefined && ratio !== undefined) {
-        // rgb case
-        let res = rgbToHwb(r,g,b);
-        res.lightness -= res.lightness * ratio;
-        // now again convert the colors into rgb;
-        return res;
-    }
-
-    if(r !== undefined && g !== undefined && b === undefined && ratio === undefined) {
-        // hexcode case
-        let hexcode = r;
-        ratio = g;
-        let arr = HexToRgb(hexcode);
-        let res = rgbToHsl(arr[0],arr[1],arr[2]);
-        res.lightness -= res.lightness * ratio;
-        // again convert the colors into rgb;
-        return res;
-    }
-
-    else return err;
-
-
-}
-
-function darkenColor(r,g,b,ratio) {
-
-    if(r !== undefined && g !== undefined && b !== undefined && ratio !== undefined) {
-        // rgb case
-        let res = rgbToHsl(r,g,b);
-        res.lightness -= res.lightness * ratio;
-        // again convert the colors into rgb
-        return res;
-    }
-
-    if(r !== undefined && g !== undefined && b === undefined && ratio === undefined) {
-        // hexcode case
-        let hexcode = r;
-        ratio = g;
-        let arr = HexToRgb(hexcode);
-        let res = rgbToHsl(arr[0],arr[1],arr[2]);
-        res.lightness -= res.lightness * ratio;
-        // again convert the colors into rgb
-        return res;
-    }
-
-    else return err;
-}
-
