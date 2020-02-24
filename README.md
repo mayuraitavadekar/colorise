@@ -6,7 +6,7 @@ Inspired by [color.js](https://github.com/brehaut/color-js) but I'm aiming to wr
 <br/>
 ## Recent Updates
 
-Currently under development.
+Feb 2020 : Raw functions are created. The code is very much raw and library is currently under development.
 
 ## Dependancies
 
