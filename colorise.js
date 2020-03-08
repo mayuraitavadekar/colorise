@@ -20,7 +20,7 @@ const codes = {
     'f' : 15
 };
 
-class colorbee {
+class colorise {
 
     checkValidity = () => {
         if(typeof(r)!='number' || typeof(g)!='number' || typeof(b)!='number') {
@@ -350,4 +350,4 @@ class colorbee {
     }
 }
 
-module.exports = colorbee;
+module.exports = colorise;
