@@ -1,9 +1,6 @@
 'use strict';
 
 const fs = require('fs');
-const err = 'error!';
-const invalid = 'invalid code!';
-const notFound = 'not found!';
 
 const codes = {
     'A' : 10,
@@ -32,7 +29,7 @@ class colorise {
     getColorName = (colorCode) => {
         let file = fs.readFileSync('list.json','utf-8');
         const parser = JSON.parse(file);
-        if(typeof(parser)!="string") return notFound;
+        if(typeof(parser[colorCode])!="string") return 'not found!';
         else return parser[colorCode];
     }
 
@@ -48,8 +45,8 @@ class colorise {
             }
         });
     
-        if(flag!=0) return colorCode,this;
-        else return notFound;
+        if(flag!=0) return colorCode;
+        else return 'not found!';
     }
 
     rgbPercentage = (r,g,b) => {
@@ -87,7 +84,7 @@ class colorise {
     
         if(hexCode[0] === '#') hexCode = hexCode.substring(1);
     
-        else if(hexCode[0]!='#' && hexCode.length!=6) return err;
+        else if(hexCode[0]!='#' && hexCode.length!=6) return 'error!';
     
         let r = this.HexadecimalToDecimal(hexCode.substring(0,2));
         let g = this.HexadecimalToDecimal(hexCode.substring(2,4));
@@ -99,7 +96,7 @@ class colorise {
     rgbToCMYK = (r,g,b) => {
     
         if(this.checkValidity(r,g,b) === true) {
-            return err;
+            return 'error!';
         }
     
         let arr = new Array();
@@ -128,7 +125,7 @@ class colorise {
     rgbToHsl = (r,g,b) => {
     
         if(this.checkValidity(r,g,b) === true) {
-            return err;
+            return 'error!';
         }
         
         let res = {
@@ -172,7 +169,7 @@ class colorise {
     rgbToHwb = (r,g,b) => {
     
         if(this.checkValidity(r,g,b) === true) {
-            return err;
+            return 'error!';
         }
     
         // initialising object
@@ -195,7 +192,7 @@ class colorise {
     whitenColor = (r,g,b,ratio) => {
     
         if(this.checkValidity(r,g,b) === true || typeof(ratio)!='number') {
-            return err;
+            return 'error!';
         }
     
         let res = {
@@ -223,7 +220,7 @@ class colorise {
     blackenColor = (r,g,b,ratio) => {
     
         if(this.checkValidity(r,g,b) === true || typeof(ratio)!='number') {
-            return err;
+            return 'error!';
         }
     
         let res = {
@@ -253,7 +250,7 @@ class colorise {
     lightenColor = (r,g,b,ratio) => {
     
         if(this.checkValidity(r,g,b) === true || typeof(ratio)!='number') {
-            return err;
+            return 'error!';
         }
 
         if(ratio < 0) ratio = 0;
@@ -278,7 +275,7 @@ class colorise {
     negateColor = (r,g,b) => {
     
         if(this.checkValidity(r,g,b) === true) {
-            return err;
+            return 'error!';
         }
     
         let arr = new Array();
@@ -301,7 +298,7 @@ class colorise {
     rgbToHex = (r,g,b) => {
     
         if(this.checkValidity(r,g,b) === true) {
-            return err;
+            return 'error!';
         }
     
         let hexcode = new String();
