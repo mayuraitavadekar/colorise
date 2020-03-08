@@ -1,4 +1,4 @@
-# colorise.js [<img src="https://github.com/mayuraitavadekar/color-bee.js/blob/master/new-color-bee-icon.png" alt="color-bee Logo" align="left">](https://github.com/mayuraitavadekar/color-bee.js)
+# colorise.js [<img src="https://github.com/mayuraitavadekar/colorise/blob/master/colorise-icon.png" alt="color-bee Logo" align="left">](https://github.com/mayuraitavadekar/color-bee.js)
 <img src="https://img.shields.io/badge/github-active-green"/> <img src="https://img.shields.io/badge/version-1.0.0-orange"/>
 
 A small JavaScript library for color manipulation.
