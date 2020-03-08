@@ -32,7 +32,8 @@ class colorise {
     getColorName = (colorCode) => {
         let file = fs.readFileSync('list.json','utf-8');
         const parser = JSON.parse(file);
-        return parser[colorCode];
+        if(typeof(parser)!="string") return notFound;
+        else return parser[colorCode];
     }
 
     getColorCode = (colorName) => {
