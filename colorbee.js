@@ -204,12 +204,19 @@ class colorbee {
         };
     
         let temp = this.rgbToHwb(r,g,b);
-        res.h = temp.h;
-        res.b = temp.b*ratio;
-        res.w = 1 - res.b;
-        //res.w = temp.w*ratio;
-        //res.b = 1 - res.w;
-        return res;
+
+        if(ratio < 0) ratio = 0;
+
+        else if(ratio > 1) return 'ratio must be less than 1.';
+
+        else {
+            res.h = temp.h;
+            res.b = temp.b*ratio;
+            res.w = 1 - res.b;
+            //res.w = temp.w*ratio;
+            //res.b = 1 - res.w;
+            return res;
+        }
     }
     
     blackenColor = (r,g,b,ratio) => {
@@ -225,12 +232,21 @@ class colorbee {
         };
     
         let temp = this.rgbToHwb(r,g,b);
-        res.h = temp.h;
-        res.w = temp.w*ratio;
-        res.b = 1 - res.w;
-        //res.b = temp.b*ratio;
-        //res.w = 1 - res.b;
-        return res;
+
+        if(ratio < 0) ratio = 0;
+
+        else if(ratio>1) return 'ratio must be less than 1.';
+
+        else {
+            res.h = temp.h;
+            res.w = temp.w*ratio;
+            res.b = 1 - res.w;
+            //res.b = temp.b*ratio;
+            //res.w = 1 - res.b;
+            return res;
+        }
+
+        
     }
         
     lightenColor = (r,g,b,ratio) => {
@@ -238,7 +254,9 @@ class colorbee {
         if(this.checkValidity(r,g,b) === true || typeof(ratio)!='number') {
             return err;
         }
-    
+
+        if(ratio < 0) ratio = 0;
+
         let res = this.rgbToHsl(r,g,b);
         res.l += res.l * ratio;
         return res;
