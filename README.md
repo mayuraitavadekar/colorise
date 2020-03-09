@@ -1,5 +1,6 @@
 # colorise.js [<img src="https://github.com/mayuraitavadekar/colorise/blob/master/colorise-icon.png" alt="color-bee Logo" align="left">](https://github.com/mayuraitavadekar/colorise.js)
-<img src="https://img.shields.io/badge/github-active-green"/> <img src="https://img.shields.io/badge/version-1.0.3-orange"/>
+<img src="https://img.shields.io/badge/github-active-green"/> <br>
+<img src="https://img.shields.io/badge/version-1.0.3-orange"/>
 
 A small JavaScript library for color manipulation.<br>
 Inspired by [color.js](https://github.com/brehaut/color-js) but I'm aiming to write simplified and robust source code with some different functionalities. 
