@@ -9,10 +9,25 @@ body {
     background-color: black;
     color: white;
     overflow-x: hidden;
+    justify-content: stretch;
 }
 
 h1 {
     text-align: center;
+}
+
+@include media-breakpoint-up(md) { 
+    .intro {
+        margin-left: 100px;
+    }
+}
+
+.intro {
+    margin-left: 50px;
+}
+
+.intro {
+
 }
 
 .starter {
@@ -38,4 +53,12 @@ samp {
 hr {
     align-content: center;
     text-align: center;
+}
+
+@media (min-width: 576px) { 
+
+    .intro {
+        margin-left: 50px;
+    }
+
 }
