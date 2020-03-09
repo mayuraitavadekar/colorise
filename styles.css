@@ -1,0 +1,41 @@
+* {
+    margin : 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nanum Gothic Coding', monospace;
+    text-align: center;
+    background-color: black;
+    color: white;
+    overflow-x: hidden;
+}
+
+h1 {
+    text-align: center;
+}
+
+.starter {
+    align-content: center;  
+}
+
+code {
+    color: blanchedalmond;
+}
+
+.comment {
+    color: lightgray;
+}
+
+samp {
+    color: blanchedalmond;
+}
+
+.lead {
+    color: lightgray;
+}
+
+hr {
+    align-content: center;
+    text-align: center;
+}

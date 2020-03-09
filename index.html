@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="icon" href="images/colorise-icon.png" type="image/gif" sizes="16x16">
+    <title>colorise.js</title>
+</head>
+<body>
+
+    <div class="starter">
+        <img src="images/colorise-icon.png">
+        <h1>colorise.js</h1>
+    </div>
+    <p class="lead">A small JavaScript library for color manipulation.</p>
+    <div class="row">
+        <div class="col" style="text-align: right;">
+            <img src="https://img.shields.io/badge/github-active-green">
+        </div>
+        <div class="col" style="text-align: left;">
+            <img src="https://img.shields.io/badge/version-1.0.0-orange">
+        </div>
+    </div>
+    <div class="intro" style="margin-left: 100px; margin-top: 50px;">
+        
+        <div class="row">
+            <h2>Installation using npm</h2>
+        </div>
+        <div class="row">
+            <samp>
+                sudo npm install colorise --save
+            </samp>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <h2>Usage</h2>
+        </div>
+        <div class="row" style="text-align: left;">
+            <samp>
+
+                <span class="comment">// create instance of class library</span> <br>
+                
+                let result; <br>
+                
+                let obj = new colorise(); <br><br>
+
+                <span class="comment">// get color-name from hex-color-code </span> <br>
+                result = obj.getColorName('#714693'); <br>
+                console.log(result); <span class="comment">// 'Affair'</span> <br><br>
+
+                <span class="comment">// get hex-color-code from color-name </span> <br>
+                result = obj.getColorCode('Black Rose'); <br>
+                console.log(result); <span class="comment">// '#67032d'</span> <br><br>
+                
+                <span class="comment">// here are different conversions returns array or object</span> <br>
+                obj.rgbToHex(50,168,82); <span class="comment">// returns hex-code </span><br>
+                obj.hexToRgb(#165852); <span class="comment">// returns r,g,b values</span> <br>
+                obj.whitenColor(50,168,82,2/3); <span class="comment">// returns new set of r,g,b</span> <br>
+                obj.blackenColor(50,168,82,1/2); <span class="comment">// returns new set of r,g,b</span> <br>
+                obj.rgbToCMYK(10,165,255); <span class="comment">// returns new set of c,m,y,b</span> <br>
+                obj.rgbPercentage(222,245,251); <span class="comment">// returns percentage of r,g,b values</span> <br>
+                obj.rgbToHsl(110,154,111); <span class="comment">// returns new set of h,s,l</span> <br>
+                obj.negateColor(111,120,145); <span class="comment">// returns negated color</span> <br>
+            </samp>
+        </div>
+        <br><br>
+        <div class="row">
+            <h2>License</h2>
+        </div>
+        <div class="row">
+            <p class="lead">MIT License (MIT)</p>
+        </div>
+        <br>
+
+        <div class="row">
+            <h2>Contributions</h2>
+        </div>
+        <div class="row" style="justify-content: stretch; text-align: left;">
+            <p class="lead">
+                Pull requests are welcome. 
+                <br>If anyone anyone finds some part of code needs to be changed, improved and written differently or have an idea,
+                <br>Please drop a <a href=mailto:mayuraitavadekar2690@gmail.com>mail</a> or visit my <a href="https://github.com/mayuraitavadekar/colorise">Github</a>.
+            </p>
+        </div>
+
+        <br>
+
+        <footer>
+            <p style="font-size: 15px;" class="lead">Copyright (c) 2020 Mayur Aitavadekar </p>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
