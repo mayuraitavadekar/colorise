@@ -46,7 +46,7 @@ console.log(result); // 'Aero'
 This code is originally written and no part can be copied/used/modified/changed/improved without permission of author. The code is licensed under MIT License Copyright (C) 2020. 
 
 For writing some conversion functions the functions are learned from 'https://www.rapidtables.com/'
-This work is inspired by original huge library 'https://github.com/Qix-/color'. The color-data used in code is provided by [Jonathan Neal](https://github.com/jonathantneal) on his github which obvious XD, how can I know all these color codes and their names XD. All right.
+The color-data used in code is provided by [Jonathan Neal](https://github.com/jonathantneal) on his github which is obvious, how can anyone know all these color codes and their names XD. All right.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. If anyone finds that something in code need to changed/improved/modified please drop mail.
@@ -63,7 +63,7 @@ Please make sure to update tests as appropriate.
 
 ## Dependancies
 
-- No dependancies till date.
+- No external dependancies till date.
 
 ## Contributing
 
