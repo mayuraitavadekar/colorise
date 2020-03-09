@@ -41,26 +41,26 @@
         </div>
         <div class="row" style="text-align: left;">
             <samp>
-
+                
+                const colorise = require('colorise');
+                
                 <span class="comment">// create instance of class library</span> <br>
-                
-                let result; <br>
-                
-                let obj = new colorise(); <br><br>
+                      
+                let c = new colorise(); <br><br>
 
                 <span class="comment">// get color-name from hex-color-code </span> <br>
-                result = obj.getColorName('#714693'); <br>
+                let result = c.getColorName('#714693'); <br>
                 console.log(result); <span class="comment">// 'Affair'</span> <br><br>
 
                 <span class="comment">// get hex-color-code from color-name </span> <br>
-                result = obj.getColorCode('Black Rose'); <br>
+                result = c.getColorCode('Black Rose'); <br>
                 console.log(result); <span class="comment">// '#67032d'</span> <br><br>
                 
                 <span class="comment">// here are different conversions returns array or object</span> <br>
-                obj.rgbToHex(50,168,82); <span class="comment">// returns hex-code </span><br>
-                obj.hexToRgb(#165852); <span class="comment">// returns r,g,b values</span> <br>
-                obj.rgbToHsl(110,154,111); <span class="comment">// returns new set of h,s,l</span> <br>
-                obj.negateColor(111,120,145); <span class="comment">// returns negated color</span> <br>
+                c.rgbToHex(50,168,82); <span class="comment">// returns hex-code </span><br>
+                c.hexToRgb(#165852); <span class="comment">// returns r,g,b values</span> <br>
+                c.rgbToHsl(110,154,111); <span class="comment">// returns new set of h,s,l</span> <br>
+                c.negateColor(111,120,145); <span class="comment">// returns negated color</span> <br>
                 <br>
                 <p class="lead">For detailed documentaion please visit <a href="https://github.com/mayuraitavadekar/colorise">Github</a>.</p>
             </samp>
