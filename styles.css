@@ -20,6 +20,10 @@ h1 {
     .intro {
         margin-left: 100px;
     }
+
+    body {
+        overflow: hidden;
+    }
 }
 
 .intro {
@@ -61,4 +65,8 @@ hr {
         margin-left: 50px;
     }
 
+}
+
+.badges {
+    text-align: center;
 }
