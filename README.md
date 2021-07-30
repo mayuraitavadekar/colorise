@@ -43,10 +43,9 @@ console.log(result); // 'Aero'
 
 
 ## Disclaimer
-This code is originally written and no part can be copied/used/modified/changed/improved without permission of author. The code is licensed under MIT License Copyright (C) 2020. 
+Library is licensed under MIT License Copyright (C) 2020. 
 
-For writing some conversion functions the functions are learned from 'https://www.rapidtables.com/'
-The color-data used in code is provided by [Jonathan Neal](https://github.com/jonathantneal) on his github which is obvious, how can anyone know all these color codes and their names XD. All right.
+The color-data used in code is provided by [Jonathan Neal](https://github.com/jonathantneal) on his github which is obvious, how can anyone know all these color codes and their names XD.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. If anyone finds that something in code need to changed/improved/modified please drop mail.
@@ -58,8 +57,7 @@ Please make sure to update tests as appropriate.
 
 ## Recent Updates
 
- - Feb 2020 : Raw functions are created. The code is very much raw and library is currently under development.
- - March 2020 : Required changes done. small code is published. 
+- I am no longer maintainer though current version is stable.
 
 ## Dependancies
 
